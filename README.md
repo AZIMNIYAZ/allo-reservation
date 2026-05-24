@@ -9,7 +9,7 @@ A production-grade, end-to-end inventory and order-fulfillment reservation syste
 
 ## Live Demo
 
-**Deployed URL:** *(deploy to Vercel and paste your URL here)*
+**Deployed URL:** *https://allo-reservation-silk.vercel.app/*
 
 ---
 
@@ -201,7 +201,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 | Decision | Rationale | With More Time |
 |----------|-----------|--------------|
-| **Atomic SQL UPDATE instead of Redis Redlock** | Keeps the stack simple and leverages Postgres, which we already require. One less moving part in a hackathon. | Add Redis (Upstash) for distributed locking if we needed to reserve across multiple DB shards or wanted sub-millisecond lock contention metrics. |
+| **Atomic SQL UPDATE instead of Redis Redlock** | Keeps the stack simple and leverages Postgres, which we already require. One less moving part in a task. | Add Redis (Upstash) for distributed locking if we needed to reserve across multiple DB shards or wanted sub-millisecond lock contention metrics. |
 | **Lazy cleanup + external cron instead of a background worker** | No extra infra, works perfectly on serverless, and is guaranteed correct. | Move to a proper queue (Inngest, BullMQ, or Temporal) with per-reservation scheduled jobs for sub-second expiry precision and cleaner separation of concerns. |
 | **Idempotency in Postgres table** | No extra Redis dependency; works well for moderate traffic. | Move to Redis with TTL for O(1) lookup and automatic expiration of stale keys. |
 | **No Stripe / payment gateway** | Out of scope for the exercise; we simulate "Confirm Purchase" as the payment-success signal. | Integrate a real payment provider webhook that calls confirm asynchronously, with full idempotency across the payment → reservation → inventory pipeline. |
@@ -228,4 +228,4 @@ With the seed data, **Mumbai FC has only 1 iPhone 15 Pro**. Both requests will h
 
 ## License
 
-MIT — built for the Allo Engineering Hackathon.
+MIT — built for the Allo Engineering .
